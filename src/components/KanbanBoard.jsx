@@ -41,7 +41,8 @@ function KanbanBoard() {
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">Pro-Kanban</h1>
-        <p className="text-gray-600">Organize your tasks efficiently</p>
+        <p className="text-gray-600">Organize your tasks efficiently.</p>
+        <p className="text-grey-600">"+" to add task & double-tap the task to edit it.</p>
         {state.showTaskCreatedMessage && (
           <div className="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg animate-fade-in">
             <p className="text-sm font-medium">Double click the respective task to edit.</p>
