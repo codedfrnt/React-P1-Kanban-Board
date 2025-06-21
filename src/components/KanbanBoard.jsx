@@ -1,4 +1,5 @@
 import { DndContext, closestCenter } from '@dnd-kit/core'
+import { useEffect } from 'react'
 import { useTaskContext } from '../context/TaskContext'
 import Column from './Column'
 
@@ -9,7 +10,7 @@ const columns = [
 ]
 
 function KanbanBoard() {
-  const { dispatch } = useTaskContext()
+  const { state, dispatch } = useTaskContext()
 
   const handleDragEnd = (event) => {
     const { active, over } = event
@@ -25,11 +26,27 @@ function KanbanBoard() {
     })
   }
 
+  // Hide the task creation message after 3 seconds
+  useEffect(() => {
+    if (state.showTaskCreatedMessage) {
+      const timer = setTimeout(() => {
+        dispatch({ type: 'HIDE_TASK_MESSAGE' })
+      }, 3000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [state.showTaskCreatedMessage, dispatch])
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">Pro-Kanban</h1>
         <p className="text-gray-600">Organize your tasks efficiently</p>
+        {state.showTaskCreatedMessage && (
+          <div className="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg animate-fade-in">
+            <p className="text-sm font-medium">Double click the respective task to edit.</p>
+          </div>
+        )}
       </div>
       
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>

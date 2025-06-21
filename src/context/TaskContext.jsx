@@ -3,7 +3,8 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react'
 const TaskContext = createContext()
 
 const initialState = {
-  tasks: []
+  tasks: [],
+  showTaskCreatedMessage: false
 }
 
 function taskReducer(state, action) {
@@ -11,7 +12,8 @@ function taskReducer(state, action) {
     case 'ADD_TASK':
       return {
         ...state,
-        tasks: [...state.tasks, action.payload]
+        tasks: [...state.tasks, action.payload],
+        showTaskCreatedMessage: true
       }
     case 'UPDATE_TASK':
       return {
@@ -38,6 +40,11 @@ function taskReducer(state, action) {
       return {
         ...state,
         tasks: action.payload
+      }
+    case 'HIDE_TASK_MESSAGE':
+      return {
+        ...state,
+        showTaskCreatedMessage: false
       }
     default:
       return state
